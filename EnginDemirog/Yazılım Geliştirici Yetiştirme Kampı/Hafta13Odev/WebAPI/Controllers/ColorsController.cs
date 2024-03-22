@@ -10,17 +10,17 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ColorsController : ControllerBase
     {
-        private readonly IColorService _colorService;
+        private readonly IColorService colorService;
 
         public ColorsController(IColorService colorService)
         {
-            _colorService = colorService;
+            this.colorService = colorService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            IDataResult<List<Color>> result = _colorService.GetAll();
+            IDataResult<List<Color>> result = colorService.GetAll();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            IDataResult<Color> result = _colorService.GetById(id);
+            IDataResult<Color> result = colorService.GetById(id);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Color color)
         {
-            IResult result = _colorService.Add(color);
+            IResult result = colorService.Add(color);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update(Color color)
         {
-            IResult result = _colorService.Update(color);
+            IResult result = colorService.Update(color);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete(Color color)
         {
-            IResult result = _colorService.Delete(color);
+            IResult result = colorService.Delete(color);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }

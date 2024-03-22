@@ -1,4 +1,4 @@
-﻿using Core.Entities.Concrete;
+﻿using Core.DataAccess.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
 using Entities.DTOs;

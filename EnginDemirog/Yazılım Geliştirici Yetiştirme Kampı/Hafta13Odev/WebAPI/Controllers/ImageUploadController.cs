@@ -11,28 +11,28 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ImageUploadController : ControllerBase
     {
-        public static IWebHostEnvironment _environment;
+        public static IWebHostEnvironment Environment;
 
         public ImageUploadController(IWebHostEnvironment environment)
         {
-            _environment = environment;
+            Environment = environment;
         }
 
         [HttpPost]
-        public async Task<string> Post(FileUploadAPI objFile)
+        public async Task<string> Post(FileUploadApi objFile)
         {
             try
             {
-                if (objFile.files.Length > 0)
+                if (objFile.Files.Length > 0)
                 {
-                    if (!Directory.Exists(_environment.WebRootPath + "\\Upload\\"))
-                        Directory.CreateDirectory(_environment.WebRootPath + "\\Upload\\");
+                    if (!Directory.Exists(Environment.WebRootPath + "\\Upload\\"))
+                        Directory.CreateDirectory(Environment.WebRootPath + "\\Upload\\");
                     using (FileStream fileStream =
-                           System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + objFile.files.FileName))
+                           System.IO.File.Create(Environment.WebRootPath + "\\Upload\\" + objFile.Files.FileName))
                     {
-                        objFile.files.CopyTo(fileStream);
+                        objFile.Files.CopyTo(fileStream);
                         fileStream.Flush();
-                        return "\\Upload\\" + objFile.files.FileName;
+                        return "\\Upload\\" + objFile.Files.FileName;
                     }
                 }
 
@@ -44,9 +44,9 @@ namespace WebAPI.Controllers
             }
         }
 
-        public class FileUploadAPI
+        public class FileUploadApi
         {
-            public IFormFile files { get; set; }
+            public IFormFile Files { get; set; }
         }
     }
 }

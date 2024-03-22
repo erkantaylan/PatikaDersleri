@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.Entities;
+using Core.DataAccess.Entities;
 using Entities.Concrete;
 
 namespace Entities.DTOs

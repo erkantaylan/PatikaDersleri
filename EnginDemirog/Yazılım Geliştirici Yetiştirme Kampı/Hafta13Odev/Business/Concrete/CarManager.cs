@@ -15,24 +15,24 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        private readonly ICarDal _carDal;
+        private readonly ICarDal carDal;
 
         public CarManager(ICarDal carDal)
         {
-            _carDal = carDal;
+            this.carDal = carDal;
         }
 
         [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car rental)
         {
-            _carDal.Add(rental);
+            carDal.Add(rental);
             return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car rental)
         {
-            _carDal.Delete(rental);
+            carDal.Delete(rental);
             return new SuccessResult(Messages.CarDeleted);
         }
 
@@ -40,54 +40,54 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour == 02) return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
+            return new SuccessDataResult<List<Car>>(carDal.GetAll(), Messages.CarsListed);
         }
 
         [CacheRemoveAspect("ICarService.Get")]
         public IDataResult<List<Car>> GetAllById(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.CarId == id), Messages.CarsListed);
+            return new SuccessDataResult<List<Car>>(carDal.GetAll(p => p.CarId == id), Messages.CarsListed);
         }
 
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<Car> GetById(int CarId)
+        public IDataResult<Car> GetById(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(p => p.CarId == CarId));
+            return new SuccessDataResult<Car>(carDal.Get(p => p.CarId == carId));
         }
 
         public IDataResult<List<Car>> GetByUnitsPrice(decimal min, decimal max)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice <= max && p.DailyPrice >= min));
+            return new SuccessDataResult<List<Car>>(carDal.GetAll(p => p.DailyPrice <= max && p.DailyPrice >= min));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetailById(int carId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.CarId == carId),
+            return new SuccessDataResult<List<CarDetailDto>>(carDal.GetCarDetails(c => c.CarId == carId),
                 Messages.CarsListed);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            return new SuccessDataResult<List<CarDetailDto>>(carDal.GetCarDetails());
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByBrand(int brandId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.BrandId == brandId),
+            return new SuccessDataResult<List<CarDetailDto>>(carDal.GetCarDetails(c => c.BrandId == brandId),
                 Messages.CarsListed);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByColor(int colorId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.ColorId == colorId),
+            return new SuccessDataResult<List<CarDetailDto>>(carDal.GetCarDetails(c => c.ColorId == colorId),
                 Messages.CarsListed);
         }
 
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car rental)
         {
-            _carDal.Update(rental);
+            carDal.Update(rental);
             return new SuccessResult(Messages.CarUpdated);
         }
     }

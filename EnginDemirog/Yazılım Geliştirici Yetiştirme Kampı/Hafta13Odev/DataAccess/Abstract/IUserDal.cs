@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.DataAccess;
-using Core.Entities.Concrete;
+using Core.DataAccess.Entities.Concrete;
 
 namespace DataAccess.Abstract
 {

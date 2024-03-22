@@ -11,17 +11,17 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly ICustomerService customerService;
 
         public CustomersController(ICustomerService customerService)
         {
-            _customerService = customerService;
+            this.customerService = customerService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            IDataResult<List<Customer>> result = _customerService.GetAll();
+            IDataResult<List<Customer>> result = customerService.GetAll();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            IDataResult<Customer> result = _customerService.GetById(id);
+            IDataResult<Customer> result = customerService.GetById(id);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Customer customer)
         {
-            IResult result = _customerService.Add(customer);
+            IResult result = customerService.Add(customer);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update(Customer customer)
         {
-            IResult result = _customerService.Update(customer);
+            IResult result = customerService.Update(customer);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete(Customer customer)
         {
-            IResult result = _customerService.Delete(customer);
+            IResult result = customerService.Delete(customer);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcustomerdetails")]
         public IActionResult GetCustomersDetails()
         {
-            IDataResult<List<CustomerDetailDto>> result = _customerService.GetCustomersDetails();
+            IDataResult<List<CustomerDetailDto>> result = customerService.GetCustomersDetails();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcustomerdetailbyid")]
         public IActionResult GetCustomersDetailById(int customerId)
         {
-            IDataResult<List<CustomerDetailDto>> result = _customerService.GetCustomersDetailById(customerId);
+            IDataResult<List<CustomerDetailDto>> result = customerService.GetCustomersDetailById(customerId);
             if (result.Success) return Ok(result);
 
             return BadRequest(result);

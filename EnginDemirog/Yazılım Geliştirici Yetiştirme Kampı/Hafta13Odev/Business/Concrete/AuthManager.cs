@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Business.Abstract;
 using Business.Constans;
-using Core.Entities.Concrete;
+using Core.DataAccess.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
@@ -11,19 +11,18 @@ namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        private readonly ITokenHelper _tokenHelper;
-        private readonly IUserService _userService;
+        private readonly ITokenHelper tokenHelper;
+        private readonly IUserService userService;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
-            _userService = userService;
-            _tokenHelper = tokenHelper;
+            this.userService = userService;
+            this.tokenHelper = tokenHelper;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
-            byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            HashingHelper.CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
             var user = new User
             {
                 Email = userForRegisterDto.Email,
@@ -33,13 +32,13 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            _userService.Add(user);
+            userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            User userToCheck = _userService.GetByMail(userForLoginDto.Email);
+            User userToCheck = userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null) return new ErrorDataResult<User>(Messages.UserNotFound);
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash,
@@ -50,14 +49,14 @@ namespace Business.Concrete
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null) return new ErrorResult(Messages.UserAlreadyExists);
+            if (userService.GetByMail(email) != null) return new ErrorResult(Messages.UserAlreadyExists);
             return new SuccessResult();
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            List<OperationClaim> claims = _userService.GetClaims(user);
-            AccessToken accessToken = _tokenHelper.CreateToken(user, claims);
+            List<OperationClaim> claims = userService.GetClaims(user);
+            AccessToken accessToken = tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
     }

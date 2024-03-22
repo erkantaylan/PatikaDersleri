@@ -10,11 +10,11 @@ namespace DataAccess.Concrete.Memory
 {
     public class InMemoryCarDal : ICarDal
     {
-        private readonly List<Car> _cars;
+        private readonly List<Car> cars;
 
         public InMemoryCarDal()
         {
-            _cars = new List<Car>
+            cars = new List<Car>
             {
                 new Car
                 {
@@ -46,18 +46,18 @@ namespace DataAccess.Concrete.Memory
 
         public InMemoryCarDal(List<Car> cars)
         {
-            _cars = cars;
+            this.cars = cars;
         }
 
         public void Add(Car car)
         {
-            _cars.Add(car);
+            cars.Add(car);
         }
 
         public void Delete(Car car)
         {
-            Car carDelete = _cars.SingleOrDefault(x => x.CarId == car.CarId);
-            _cars.Remove(carDelete);
+            Car carDelete = cars.SingleOrDefault(x => x.CarId == car.CarId);
+            cars.Remove(carDelete);
         }
 
         public Car Get(Expression<Func<Car, bool>> filter)
@@ -77,7 +77,7 @@ namespace DataAccess.Concrete.Memory
 
         public void Update(Car car)
         {
-            Car carUpdate = _cars.SingleOrDefault(x => x.CarId == car.CarId);
+            Car carUpdate = cars.SingleOrDefault(x => x.CarId == car.CarId);
             carUpdate.CarId = car.CarId;
             carUpdate.BrandId = car.BrandId;
             carUpdate.Model = car.Model;
@@ -89,12 +89,12 @@ namespace DataAccess.Concrete.Memory
 
         public List<Car> GetAll()
         {
-            return _cars;
+            return cars;
         }
 
-        public List<Car> GetAllBrandCategoryId(int BrandId)
+        public List<Car> GetAllBrandCategoryId(int brandId)
         {
-            return _cars.Where(x => x.BrandId == BrandId).ToList();
+            return cars.Where(x => x.BrandId == brandId).ToList();
         }
 
         public List<CarDetailDto> GetCarDetails()

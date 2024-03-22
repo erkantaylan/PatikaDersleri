@@ -11,17 +11,17 @@ namespace WebAPI.Controllers
     [ApiController]
     public class RentalsController : ControllerBase
     {
-        private readonly IRentalService _rentalService;
+        private readonly IRentalService rentalService;
 
         public RentalsController(IRentalService rentalService)
         {
-            _rentalService = rentalService;
+            this.rentalService = rentalService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            IDataResult<List<Rental>> result = _rentalService.GetAll();
+            IDataResult<List<Rental>> result = rentalService.GetAll();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            IDataResult<Rental> result = _rentalService.GetById(id);
+            IDataResult<Rental> result = rentalService.GetById(id);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         [HttpGet("getrentaldetailbycarid")]
         public IActionResult GetRentalDetailByCarId(int carId)
         {
-            IDataResult<List<RentalDetailDto>> result = _rentalService.GetRentalDetailByCarId(carId);
+            IDataResult<List<RentalDetailDto>> result = rentalService.GetRentalDetailByCarId(carId);
             if (result.Success) return Ok(result);
             return BadRequest(result.Message);
         }
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         [HttpGet("getrentaldetailbyuserid")]
         public IActionResult GetRentalDetailsByUserId(int userId)
         {
-            IDataResult<List<RentalDetailDto>> result = _rentalService.GetRentalDetailsByUserId(userId);
+            IDataResult<List<RentalDetailDto>> result = rentalService.GetRentalDetailsByUserId(userId);
             if (result.Success) return Ok(result);
             return BadRequest(result.Message);
         }
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbycarid")]
         public IActionResult GetByCarId(int id)
         {
-            IDataResult<List<Rental>> result = _rentalService.GetByCarId(id);
+            IDataResult<List<Rental>> result = rentalService.GetByCarId(id);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {
-            IResult result = _rentalService.Add(rental);
+            IResult result = rentalService.Add(rental);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update(Rental rental)
         {
-            IResult result = _rentalService.Update(rental);
+            IResult result = rentalService.Update(rental);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete(Rental rental)
         {
-            IResult result = _rentalService.Delete(rental);
+            IResult result = rentalService.Delete(rental);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
         [HttpGet("details")]
         public IActionResult GetRentalDetails()
         {
-            IDataResult<List<RentalDetailDto>> result = _rentalService.GetRentalDetails();
+            IDataResult<List<RentalDetailDto>> result = rentalService.GetRentalDetails();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }

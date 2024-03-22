@@ -14,19 +14,19 @@ namespace Business.BusinessAspects.Autofac
     {
         public class SecuredOperation : MethodInterception
         {
-            private readonly IHttpContextAccessor _httpContextAccessor;
-            private readonly string[] _roles;
+            private readonly IHttpContextAccessor httpContextAccessor;
+            private readonly string[] roles;
 
             public SecuredOperation(string roles)
             {
-                _roles = roles.Split(',');
-                _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+                this.roles = roles.Split(',');
+                httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
             }
 
             protected override void OnBefore(IInvocation invocation)
             {
-                List<string> roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
-                foreach (var role in _roles)
+                List<string> roleClaims = httpContextAccessor.HttpContext.User.ClaimRoles();
+                foreach (var role in roles)
                     if (roleClaims.Contains(role))
                         return;
                 throw new Exception(Messages.AuthorizationDenied);

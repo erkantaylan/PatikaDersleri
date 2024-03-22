@@ -10,20 +10,20 @@ namespace Core.Aspects.Autofac.Validation
 {
     public class ValidationAspect : MethodInterception
     {
-        private readonly Type _validatorType;
+        private readonly Type validatorType;
 
         public ValidationAspect(Type validatorType)
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
                 throw new Exception("Bu bir dogrulama sinifi degil");
 
-            _validatorType = validatorType;
+            this.validatorType = validatorType;
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var validator = (IValidator)Activator.CreateInstance(_validatorType);
-            Type entityType = _validatorType.BaseType.GetGenericArguments()[0];
+            var validator = (IValidator)Activator.CreateInstance(validatorType);
+            Type entityType = validatorType.BaseType.GetGenericArguments()[0];
             IEnumerable<object> entities = invocation.Arguments.Where(t => t.GetType() == entityType);
             foreach (var entity in entities) ValidationTool.Validate(validator, entity);
         }

@@ -8,18 +8,18 @@ namespace Core.Aspects.Caching
 {
     public class CacheRemoveAspect : MethodInterception
     {
-        private readonly ICacheManager _cacheManager;
-        private readonly string _pattern;
+        private readonly ICacheManager cacheManager;
+        private readonly string pattern;
 
         public CacheRemoveAspect(string pattern)
         {
-            _pattern = pattern;
-            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+            this.pattern = pattern;
+            cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
 
         protected override void OnSuccess(IInvocation invocation)
         {
-            _cacheManager.RemoveByPattern(_pattern);
+            cacheManager.RemoveByPattern(pattern);
         }
     }
 }

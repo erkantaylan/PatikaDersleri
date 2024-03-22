@@ -13,28 +13,26 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<ProductDetailDto> GetProductDetails(Expression<Func<ProductDetailDto, bool>> filter = null)
         {
-            using (var context = new CarDbContext())
-            {
-                IQueryable<ProductDetailDto> result = from p in context.Products
-                    join c in context.Cars on p.CarId equals c.CarId
-                    join e in context.Colors on c.ColorId equals e.ColorId
-                    join d in context.Brands on c.BrandId equals d.BrandId
-                    select new ProductDetailDto
-                    {
-                        ProductId = p.ProductId,
-                        ProductName = p.ProductName,
-                        UnitPrice = p.UnitPrice,
-                        CarId = p.CarId,
-                        CarName = c.CarName,
-                        BrandName = d.BrandName,
-                        Model = c.Model,
-                        ColorName = e.ColorName,
-                        ModelYear = c.ModelYear,
-                        DailyPrice = c.DailyPrice,
-                        Description = c.Description
-                    };
-                return filter == null ? result.ToList() : result.Where(filter).ToList();
-            }
+            using var context = new CarDbContext();
+            IQueryable<ProductDetailDto> result = from p in context.Products
+                join c in context.Cars on p.CarId equals c.CarId
+                join e in context.Colors on c.ColorId equals e.ColorId
+                join d in context.Brands on c.BrandId equals d.BrandId
+                select new ProductDetailDto
+                {
+                    ProductId = p.ProductId,
+                    ProductName = p.ProductName,
+                    UnitPrice = p.UnitPrice,
+                    CarId = p.CarId,
+                    CarName = c.CarName,
+                    BrandName = d.BrandName,
+                    Model = c.Model,
+                    ColorName = e.ColorName,
+                    ModelYear = c.ModelYear,
+                    DailyPrice = c.DailyPrice,
+                    Description = c.Description
+                };
+            return filter == null ? result.ToList() : result.Where(filter).ToList();
         }
     }
 }

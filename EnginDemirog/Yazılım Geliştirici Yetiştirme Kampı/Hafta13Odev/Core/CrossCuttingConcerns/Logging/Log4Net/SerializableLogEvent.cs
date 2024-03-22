@@ -6,13 +6,13 @@ namespace Core.CrossCuttingConcerns.Logging.Log4Net
     [Serializable]
     public class SerializableLogEvent
     {
-        private LoggingEvent _loggingEvent;
+        private LoggingEvent loggingEvent;
 
         public SerializableLogEvent(LoggingEvent loggingEvent)
         {
-            _loggingEvent = loggingEvent;
+            this.loggingEvent = loggingEvent;
         }
 
-        public object Message => _loggingEvent.MessageObject;
+        public object Message => loggingEvent.MessageObject;
     }
 }

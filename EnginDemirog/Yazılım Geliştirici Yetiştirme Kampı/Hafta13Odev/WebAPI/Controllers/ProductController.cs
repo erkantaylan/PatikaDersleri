@@ -11,17 +11,17 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductService productService;
 
         public ProductController(IProductService productService)
         {
-            _productService = productService;
+            this.productService = productService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            IDataResult<List<Product>> result = _productService.GetAll();
+            IDataResult<List<Product>> result = productService.GetAll();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            IDataResult<Product> result = _productService.GetById(id);
+            IDataResult<Product> result = productService.GetById(id);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Product product)
         {
-            IResult result = _productService.Add(product);
+            IResult result = productService.Add(product);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update(Product product)
         {
-            IResult result = _productService.Update(product);
+            IResult result = productService.Update(product);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete(Product product)
         {
-            IResult result = _productService.Delete(product);
+            IResult result = productService.Delete(product);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcustomerdetails")]
         public IActionResult GetCarDetails()
         {
-            IDataResult<List<ProductDetailDto>> result = _productService.GetProductDetails();
+            IDataResult<List<ProductDetailDto>> result = productService.GetProductDetails();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcustomerdetailbyid")]
         public IActionResult GetCustomerDetailById(int customerId)
         {
-            IDataResult<List<ProductDetailDto>> result = _productService.GetProductDetailById(customerId);
+            IDataResult<List<ProductDetailDto>> result = productService.GetProductDetailById(customerId);
             if (result.Success) return Ok(result);
 
             return BadRequest(result);

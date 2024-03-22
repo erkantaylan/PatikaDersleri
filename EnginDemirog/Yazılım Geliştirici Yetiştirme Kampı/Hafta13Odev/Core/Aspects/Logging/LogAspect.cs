@@ -10,19 +10,19 @@ namespace Core.Aspects.Logging
 {
     public class LogAspect : MethodInterception
     {
-        private readonly LoggerServiceBase _loggerServiceBase;
+        private readonly LoggerServiceBase loggerServiceBase;
 
         public LogAspect(Type loggerService)
         {
             if (loggerService.BaseType != typeof(LoggerServiceBase))
                 throw new Exception(AspectMessages.WrongLoggerType);
 
-            _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
+            loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            _loggerServiceBase.Info(GetLogDetail(invocation));
+            loggerServiceBase.Info(GetLogDetail(invocation));
         }
 
         private LogDetail GetLogDetail(IInvocation invocation)

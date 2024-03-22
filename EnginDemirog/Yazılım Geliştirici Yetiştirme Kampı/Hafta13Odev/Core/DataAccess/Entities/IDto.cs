@@ -1,4 +1,4 @@
-﻿namespace Core.Entities
+﻿namespace Core.DataAccess.Entities
 {
     public interface IDto
     {

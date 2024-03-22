@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using Core.Entities.Concrete;
+using Core.DataAccess.Entities.Concrete;
 using Core.Extensions;
 using Core.Utilities.Security.Encyption;
 using Microsoft.Extensions.Configuration;
@@ -13,30 +13,30 @@ namespace Core.Utilities.Security.Jwt
 {
     public class JwtHelper : ITokenHelper
     {
-        private DateTime _accessTokenExpiration;
-        private readonly TokenOptions _tokenOptions;
+        private DateTime accessTokenExpiration;
+        private readonly TokenOptions tokenOptions;
 
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
-            _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
 
         public IConfiguration Configuration { get; }
 
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
         {
-            _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
-            SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+            accessTokenExpiration = DateTime.Now.AddMinutes(tokenOptions.AccessTokenExpiration);
+            SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey);
             SigningCredentials signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
-            JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
+            JwtSecurityToken jwt = CreateJwtSecurityToken(tokenOptions, user, signingCredentials, operationClaims);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var token = jwtSecurityTokenHandler.WriteToken(jwt);
 
             return new AccessToken
             {
                 Token = token,
-                Expiration = _accessTokenExpiration
+                Expiration = accessTokenExpiration
             };
         }
 
@@ -46,7 +46,7 @@ namespace Core.Utilities.Security.Jwt
             var jwt = new JwtSecurityToken(
                 tokenOptions.Issuer,
                 tokenOptions.Audience,
-                expires: _accessTokenExpiration,
+                expires: accessTokenExpiration,
                 notBefore: DateTime.Now,
                 claims: SetClaims(user, operationClaims),
                 signingCredentials: signingCredentials

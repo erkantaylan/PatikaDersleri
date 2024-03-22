@@ -1,33 +1,33 @@
 ﻿using System.Collections.Generic;
 using Business.Abstract;
-using Core.Entities.Concrete;
+using Core.DataAccess.Entities.Concrete;
 using DataAccess.Abstract;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        private readonly IUserDal _userDal;
+        private readonly IUserDal userDal;
 
         public UserManager(IUserDal userDal)
         {
-            _userDal = userDal;
+            this.userDal = userDal;
         }
 
         public List<OperationClaim> GetClaims(User user)
         {
-            return _userDal.GetClaims(user);
+            return userDal.GetClaims(user);
         }
 
         //[SecuredOperation("car.add,admin")]
         public void Add(User user)
         {
-            _userDal.Add(user);
+            userDal.Add(user);
         }
 
         public User GetByMail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            return userDal.Get(u => u.Email == email);
         }
     }
 }

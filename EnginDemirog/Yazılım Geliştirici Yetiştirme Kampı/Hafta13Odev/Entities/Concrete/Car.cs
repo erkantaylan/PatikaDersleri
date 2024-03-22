@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core.Entities;
+using Core.DataAccess.Entities;
 
 namespace Entities.Concrete
 {

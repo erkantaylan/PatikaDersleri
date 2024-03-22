@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Entities;
+using Core.DataAccess.Entities;
 
 namespace Entities.Concrete
 {

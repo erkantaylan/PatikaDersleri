@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.Entities.Concrete;
+using Core.DataAccess.Entities.Concrete;
 
 namespace Core.Utilities.Security.Jwt
 {

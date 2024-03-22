@@ -7,8 +7,8 @@ namespace Core.Utilities.Helper
 {
     public class FileHelper
     {
-        private static readonly string _currentFileDirectory = Environment.CurrentDirectory + "\\wwwroot";
-        private static readonly string _folderName = "\\images\\";
+        private static readonly string CurrentFileDirectory = Environment.CurrentDirectory + "\\wwwroot";
+        private static readonly string FolderName = "\\images\\";
 
         public static IResult Add(IFormFile file)
         {
@@ -21,9 +21,9 @@ namespace Core.Utilities.Helper
 
             if (typeValid.Message != null) return new ErrorResult(typeValid.Message);
 
-            CheckFileDirectoryExist(_currentFileDirectory + _folderName);
-            CreateImageFile(_currentFileDirectory + _folderName + randomName + type, file);
-            return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
+            CheckFileDirectoryExist(CurrentFileDirectory + FolderName);
+            CreateImageFile(CurrentFileDirectory + FolderName + randomName + type, file);
+            return new SuccessResult((FolderName + randomName + type).Replace("\\", "/"));
         }
 
         public static IResult Update(string imagePath, IFormFile file)
@@ -37,16 +37,16 @@ namespace Core.Utilities.Helper
 
             if (typeValid.Message != null) return new ErrorResult(typeValid.Message);
 
-            DeleteOldImageFile((_currentFileDirectory + imagePath).Replace("/", "\\"));
-            CheckFileDirectoryExist(_currentFileDirectory + _folderName);
-            CreateImageFile(_currentFileDirectory + _folderName + randomName + type, file);
+            DeleteOldImageFile((CurrentFileDirectory + imagePath).Replace("/", "\\"));
+            CheckFileDirectoryExist(CurrentFileDirectory + FolderName);
+            CreateImageFile(CurrentFileDirectory + FolderName + randomName + type, file);
 
-            return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
+            return new SuccessResult((FolderName + randomName + type).Replace("\\", "/"));
         }
 
         public static IResult Delete(string path)
         {
-            DeleteOldImageFile((_currentFileDirectory + path).Replace("/", "\\"));
+            DeleteOldImageFile((CurrentFileDirectory + path).Replace("/", "\\"));
             return new SuccessResult();
         }
 
@@ -78,11 +78,9 @@ namespace Core.Utilities.Helper
 
         private static void CreateImageFile(string directory, IFormFile file)
         {
-            using (FileStream fs = File.Create(directory))
-            {
-                file.CopyTo(fs);
-                fs.Flush();
-            }
+            using FileStream fs = File.Create(directory);
+            file.CopyTo(fs);
+            fs.Flush();
         }
     }
 }

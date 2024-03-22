@@ -8,25 +8,25 @@ namespace Core.Aspects.Performance
 {
     public class PerformanceAspect : MethodInterception
     {
-        private readonly int _interval;
-        private readonly Stopwatch _stopwatch;
+        private readonly int interval;
+        private readonly Stopwatch stopwatch;
 
         public PerformanceAspect(int interval)
         {
-            _interval = interval;
-            _stopwatch = ServiceTool.ServiceProvider.GetService<Stopwatch>();
+            this.interval = interval;
+            stopwatch = ServiceTool.ServiceProvider.GetService<Stopwatch>();
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            _stopwatch.Start();
+            stopwatch.Start();
         }
 
         protected override void OnAfter(IInvocation invocation)
         {
-            if (_stopwatch.Elapsed.TotalSeconds > _interval)
+            if (stopwatch.Elapsed.TotalSeconds > interval)
                 Debug.WriteLine(
-                    $"Performance : {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name} ---> {_stopwatch.Elapsed.TotalSeconds}");
+                    $"Performance : {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name} ---> {stopwatch.Elapsed.TotalSeconds}");
         }
     }
 }

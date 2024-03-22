@@ -10,13 +10,13 @@ namespace Core.Aspects.Caching
 {
     public class CacheAspect : MethodInterception
     {
-        private readonly ICacheManager _cacheManager;
-        private readonly int _duration;
+        private readonly ICacheManager cacheManager;
+        private readonly int duration;
 
         public CacheAspect(int duration = 60)
         {
-            _duration = duration;
-            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+            this.duration = duration;
+            cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
 
         public override void Intercept(IInvocation invocation)
@@ -24,14 +24,14 @@ namespace Core.Aspects.Caching
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             List<object> arguments = invocation.Arguments.ToList();
             var key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})";
-            if (_cacheManager.IsAdd(key))
+            if (cacheManager.IsAdd(key))
             {
-                invocation.ReturnValue = _cacheManager.Get(key);
+                invocation.ReturnValue = cacheManager.Get(key);
                 return;
             }
 
             invocation.Proceed();
-            _cacheManager.Add(key, invocation.ReturnValue, _duration);
+            cacheManager.Add(key, invocation.ReturnValue, duration);
         }
     }
 }

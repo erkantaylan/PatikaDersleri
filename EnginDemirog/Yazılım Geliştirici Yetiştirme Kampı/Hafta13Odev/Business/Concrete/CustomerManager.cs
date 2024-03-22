@@ -10,54 +10,54 @@ namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
-        private readonly ICustomerDal _customerDal;
+        private readonly ICustomerDal customerDal;
 
         public CustomerManager(ICustomerDal customerDal)
         {
-            _customerDal = customerDal;
+            this.customerDal = customerDal;
         }
 
         public IResult Add(Customer customer)
         {
-            _customerDal.Add(customer);
+            customerDal.Add(customer);
             return new SuccessResult(Messages.CustomerAdded);
         }
 
         public IResult Delete(Customer customer)
         {
-            _customerDal.Delete(customer);
+            customerDal.Delete(customer);
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed);
+            return new SuccessDataResult<List<Customer>>(customerDal.GetAll(), Messages.CustomerListed);
         }
 
         public IDataResult<List<Customer>> GetAllById(int id)
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(p => p.CustomerId == id));
+            return new SuccessDataResult<List<Customer>>(customerDal.GetAll(p => p.CustomerId == id));
         }
 
         public IDataResult<Customer> GetById(int id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.UserId == id), Messages.CustomerListed);
+            return new SuccessDataResult<Customer>(customerDal.Get(c => c.UserId == id), Messages.CustomerListed);
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomersDetails()
         {
-            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails(), Messages.Listed);
+            return new SuccessDataResult<List<CustomerDetailDto>>(customerDal.GetCustomerDetails(), Messages.Listed);
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomersDetailById(int customerId)
         {
             return new SuccessDataResult<List<CustomerDetailDto>>(
-                _customerDal.GetCustomerDetails(c => c.CustomerId == customerId), Messages.Listed);
+                customerDal.GetCustomerDetails(c => c.CustomerId == customerId), Messages.Listed);
         }
 
         public IResult Update(Customer customer)
         {
-            _customerDal.Update(customer);
+            customerDal.Update(customer);
             return new SuccessResult(Messages.Updated);
         }
     }

@@ -11,17 +11,17 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly ICarService _carService;
+        private readonly ICarService carService;
 
         public CarsController(ICarService carService)
         {
-            _carService = carService;
+            this.carService = carService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            IDataResult<List<Car>> result = _carService.GetAll();
+            IDataResult<List<Car>> result = carService.GetAll();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Car car)
         {
-            IResult result = _carService.Add(car);
+            IResult result = carService.Add(car);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update(Car car)
         {
-            IResult result = _carService.Update(car);
+            IResult result = carService.Update(car);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete(Car car)
         {
-            IResult result = _carService.Delete(car);
+            IResult result = carService.Delete(car);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcardetails")]
         public IActionResult GetCarDetails()
         {
-            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetails();
+            IDataResult<List<CarDetailDto>> result = carService.GetCarDetails();
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcarsbycolorid")]
         public IActionResult GetCarDetailsByColor(int colorId)
         {
-            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetailsByColor(colorId);
+            IDataResult<List<CarDetailDto>> result = carService.GetCarDetailsByColor(colorId);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
         [HttpGet("carsDetailsByBrandId")]
         public IActionResult GetCarDetailsByBrand(int brandId)
         {
-            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetailsByBrand(brandId);
+            IDataResult<List<CarDetailDto>> result = carService.GetCarDetailsByBrand(brandId);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetCarDetailById")]
         public IActionResult GetCarDetailById(int carId)
         {
-            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetailById(carId);
+            IDataResult<List<CarDetailDto>> result = carService.GetCarDetailById(carId);
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
