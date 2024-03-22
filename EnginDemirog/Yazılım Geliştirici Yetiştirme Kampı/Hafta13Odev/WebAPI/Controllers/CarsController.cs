@@ -1,6 +1,8 @@
-﻿using Business.Abstract;
+﻿using System.Collections.Generic;
+using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -9,7 +11,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        ICarService _carService;
+        private readonly ICarService _carService;
 
         public CarsController(ICarService carService)
         {
@@ -19,11 +21,8 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _carService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IDataResult<List<Car>> result = _carService.GetAll();
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
@@ -31,79 +30,57 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Car car)
         {
-            var result = _carService.Add(car);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IResult result = _carService.Add(car);
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
         [HttpPost("update")]
         public IActionResult Update(Car car)
         {
-            var result = _carService.Update(car);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IResult result = _carService.Update(car);
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
         [HttpDelete("delete")]
         public IActionResult Delete(Car car)
         {
-            var result = _carService.Delete(car);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IResult result = _carService.Delete(car);
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
-
 
 
         [HttpGet("getcardetails")]
         public IActionResult GetCarDetails()
         {
-            var result = _carService.GetCarDetails();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetails();
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
         [HttpGet("getcarsbycolorid")]
         public IActionResult GetCarDetailsByColor(int colorId)
         {
-            var result = _carService.GetCarDetailsByColor(colorId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetailsByColor(colorId);
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
         [HttpGet("carsDetailsByBrandId")]
         public IActionResult GetCarDetailsByBrand(int brandId)
         {
-            var result = _carService.GetCarDetailsByBrand(brandId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetailsByBrand(brandId);
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
         [HttpGet("GetCarDetailById")]
         public IActionResult GetCarDetailById(int carId)
         {
-            var result = _carService.GetCarDetailById(carId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            IDataResult<List<CarDetailDto>> result = _carService.GetCarDetailById(carId);
+            if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 

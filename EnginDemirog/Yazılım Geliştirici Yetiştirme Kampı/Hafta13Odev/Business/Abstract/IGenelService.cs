@@ -1,9 +1,5 @@
-﻿using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Core.Utilities.Results;
 
 namespace Business.Abstract
 {
@@ -15,6 +11,5 @@ namespace Business.Abstract
         IResult Add(T rental);
         IResult Delete(T rental);
         IResult Update(T rental);
-
     }
 }

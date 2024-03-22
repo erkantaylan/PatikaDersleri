@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Security.Claims;
 
 namespace Core.Extensions
@@ -10,7 +8,7 @@ namespace Core.Extensions
     {
         public static List<string> Claims(this ClaimsPrincipal claimsPrincipial, string claimType)
         {
-            var result = claimsPrincipial?.FindAll(claimType)?.Select(x => x.Value).ToList();
+            List<string> result = claimsPrincipial?.FindAll(claimType)?.Select(x => x.Value).ToList();
             return result;
         }
 

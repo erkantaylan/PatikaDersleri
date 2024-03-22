@@ -1,27 +1,24 @@
-﻿using Business.Concrete;
+﻿using System;
+using System.Collections.Generic;
+using Business.Concrete;
+using Core.Utilities.Results;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.Memory;
-using System;
+using Entities.Concrete;
+using Entities.DTOs;
 
 namespace ConsoleUI
 {
     public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            BrandManager productManager = new BrandManager(new EfBrandDal());
-            var result = productManager.GetAll();
-            if (result.Success == true)
-            {
-                foreach (var product in result.Data)
-                {
+            var productManager = new BrandManager(new EfBrandDal());
+            IDataResult<List<Brand>> result = productManager.GetAll();
+            if (result.Success)
+                foreach (Brand product in result.Data)
                     Console.WriteLine(product.BrandId + " / " + product.BrandName);
-                }
-            }
             else
-            {
                 Console.WriteLine(result.Message);
-            }
             //CarTest();
             //ProductTest();
             Console.ReadKey();
@@ -29,37 +26,24 @@ namespace ConsoleUI
 
         private static void CarTest()
         {
-            CarManager carManager = new CarManager(new EfCarDal());
-            var result = carManager.GetCarDetails();
-            if (result.Success == true)
-            {
-                foreach (var product in result.Data)
-                {
+            var carManager = new CarManager(new EfCarDal());
+            IDataResult<List<CarDetailDto>> result = carManager.GetCarDetails();
+            if (result.Success)
+                foreach (CarDetailDto product in result.Data)
                     Console.WriteLine(product.CarName + " / " + product.DailyPrice);
-                }
-            }
             else
-            {
                 Console.WriteLine(result.Message);
-            }
         }
 
         private static void ProductTest()
         {
-            ProductManager productManager = new ProductManager(new EfProductDal());
-            var result = productManager.GetProductDetails();
-            if (result.Success == true)
-            {
-                foreach (var product in result.Data)
-                {
+            var productManager = new ProductManager(new EfProductDal());
+            IDataResult<List<ProductDetailDto>> result = productManager.GetProductDetails();
+            if (result.Success)
+                foreach (ProductDetailDto product in result.Data)
                     Console.WriteLine(product.ProductName + " / " + product.CarName);
-                }
-            }
             else
-            {
                 Console.WriteLine(result.Message);
-            }
-
         }
     }
 }

@@ -10,6 +10,5 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.UserId).NotEmpty();
             RuleFor(p => p.Amount).GreaterThan(0);
         }
-
     }
 }

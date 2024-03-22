@@ -1,9 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using System.Collections.Generic;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Abstract
 {
@@ -11,6 +9,5 @@ namespace Business.Abstract
     {
         IDataResult<List<CustomerDetailDto>> GetCustomersDetailById(int customerId);
         IDataResult<List<CustomerDetailDto>> GetCustomersDetails();
-
     }
 }

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Business.Constans
+﻿namespace Business.Constans
 {
     public class Messages
     {
         public static string CustomerListed = "Müşteriler getirildi";
-        public static string ProductDelete="Ürün Silinmiştir.";
+        public static string ProductDelete = "Ürün Silinmiştir.";
         public static string ProductAdded = "Ürün Eklendi.";
         public static string ProductNameInvalid = "Ürün ismi gecersiz.";
         public static string ProductListed = "Ürünler Listelendi.";
         public static string MaintenanceTime = "Sistem Bakım Zamanındadır.";
         public static string CarAdded = "Araba listeye eklendi.";
-        public static string CarNameInvalid =  "Araba ismi en az 2 harf olmalıdır.";
+        public static string CarNameInvalid = "Araba ismi en az 2 harf olmalıdır.";
         public static string DailyPriceInvalid = "Araba fiyatı 0 tl'den büyük olmalı.";
         public static string UserNotAdded = "Email ve Password bilgileri boş kalamaz";
         public static string UserAdded = "Hoşgeldiniz";
@@ -39,10 +35,10 @@ namespace Business.Constans
         public static string Deleted = "Silindi";
         public static string Updated = "Güncellendi";
         public static string Listed = "Listelendi";
-        public static string ProductUpdated="Ürün güncellendi.";
+        public static string ProductUpdated = "Ürün güncellendi.";
         public static string BrandDelete = "Marka silindi.";
-        public static string CustomerAdded= "Müşteri eklendi.";
-        public static string CustomerDeleted= "Müşteri silindi.";
+        public static string CustomerAdded = "Müşteri eklendi.";
+        public static string CustomerDeleted = "Müşteri silindi.";
         public static string CarCheckImageLimited = "Bir arabanın maksimum 5 resmi olabilir";
         public static string CarImagesListed = "Araba resimleri listelendi";
         public static string CarImageDeleted = "Araba resmi silindi";

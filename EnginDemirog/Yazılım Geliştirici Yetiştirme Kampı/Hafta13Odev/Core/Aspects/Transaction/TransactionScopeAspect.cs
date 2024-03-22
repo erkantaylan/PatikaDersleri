@@ -1,9 +1,7 @@
-﻿using Castle.DynamicProxy;
-using Core.Utilities.Interceptors;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Transactions;
+using Castle.DynamicProxy;
+using Core.Utilities.Interceptors;
 
 namespace Core.Aspects.Transaction
 {
@@ -11,18 +9,17 @@ namespace Core.Aspects.Transaction
     {
         public override void Intercept(IInvocation invocation)
         {
-            using (TransactionScope transactionScope = new TransactionScope())
+            using (var transactionScope = new TransactionScope())
             {
                 try
                 {
                     invocation.Proceed();
                     transactionScope.Complete();
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     transactionScope.Dispose();
                     throw;
-
                 }
             }
         }

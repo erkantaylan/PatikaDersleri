@@ -1,14 +1,14 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using FluentValidation;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Extensions
 {
     public class ExceptionMiddleware
     {
-        private RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(RequestDelegate next)
         {
@@ -32,11 +32,8 @@ namespace Core.Extensions
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            string message = "Internal Server Error";
-            if (e.GetType() == typeof(ValidationException))
-            {
-                message = e.Message;
-            }
+            var message = "Internal Server Error";
+            if (e.GetType() == typeof(ValidationException)) message = e.Message;
 
             return httpContext.Response.WriteAsync(new ErrorDetails
             {

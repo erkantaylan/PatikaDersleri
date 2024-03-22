@@ -1,5 +1,4 @@
 ﻿using Core.Entities.Concrete;
-using Entities.Concrete;
 using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
@@ -11,6 +10,5 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.Email).NotEmpty();
             RuleFor(p => p.Email).EmailAddress();
         }
-
     }
 }

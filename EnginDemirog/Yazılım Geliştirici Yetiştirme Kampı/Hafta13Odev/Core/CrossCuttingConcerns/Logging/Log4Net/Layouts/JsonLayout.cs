@@ -1,10 +1,7 @@
-﻿using log4net.Core;
+﻿using System.IO;
+using log4net.Core;
 using log4net.Layout;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Core.CrossCuttingConcerns.Logging.Log4Net.Layouts
 {
@@ -12,7 +9,6 @@ namespace Core.CrossCuttingConcerns.Logging.Log4Net.Layouts
     {
         public override void ActivateOptions()
         {
-
         }
 
         public override void Format(TextWriter writer, LoggingEvent loggingEvent)

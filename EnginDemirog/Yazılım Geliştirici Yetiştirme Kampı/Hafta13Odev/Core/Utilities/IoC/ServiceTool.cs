@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Utilities.IoC
 {
@@ -17,6 +15,5 @@ namespace Core.Utilities.IoC
             ServiceProvider = serviceColletion.BuildServiceProvider();
             return serviceColletion;
         }
-
     }
 }

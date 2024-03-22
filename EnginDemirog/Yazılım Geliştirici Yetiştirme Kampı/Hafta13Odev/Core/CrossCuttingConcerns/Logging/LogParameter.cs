@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace Core.CrossCuttingConcerns.Logging
+﻿namespace Core.CrossCuttingConcerns.Logging
 {
     public class LogParameter
     {
@@ -9,5 +6,4 @@ namespace Core.CrossCuttingConcerns.Logging
         public object Value { get; set; }
         public string Type { get; set; }
     }
-
 }

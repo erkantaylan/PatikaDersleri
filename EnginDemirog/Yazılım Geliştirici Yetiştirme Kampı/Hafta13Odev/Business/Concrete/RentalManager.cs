@@ -1,24 +1,22 @@
-﻿using Business.Abstract;
+﻿using System.Collections.Generic;
+using Business.Abstract;
 using Business.Constans;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Text;
 
 namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-        IRentalDal _rentalDal;
+        private readonly IRentalDal _rentalDal;
+
         public RentalManager(IRentalDal rentalDal)
         {
             _rentalDal = rentalDal;
         }
+
         public IResult Add(Rental rental)
         {
             _rentalDal.Add(rental);
@@ -75,12 +73,11 @@ namespace Business.Concrete
         public IDataResult<List<RentalDetailDto>> GetRentalDetailByCarId(int carId)
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(r => r.CarId == carId));
-
         }
 
         public IDataResult<List<Rental>> GetByCarId(int carId)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(p => p.CarId==carId));
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(p => p.CarId == carId));
         }
     }
 }

@@ -1,24 +1,21 @@
-﻿using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Logging.Log4Net;
-using Core.CrossCuttingConcerns.Logging;
-using Core.Utilities.Interceptors;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Castle.DynamicProxy;
+using Core.CrossCuttingConcerns.Logging;
+using Core.CrossCuttingConcerns.Logging.Log4Net;
+using Core.Utilities.Interceptors;
 using Core.Utilities.Messages;
 
 namespace Core.Aspects.Logging
 {
     public class LogAspect : MethodInterception
     {
-        private LoggerServiceBase _loggerServiceBase;
+        private readonly LoggerServiceBase _loggerServiceBase;
 
         public LogAspect(Type loggerService)
         {
             if (loggerService.BaseType != typeof(LoggerServiceBase))
-            {
-                throw new System.Exception(AspectMessages.WrongLoggerType);
-            }
+                throw new Exception(AspectMessages.WrongLoggerType);
 
             _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
         }
@@ -31,15 +28,13 @@ namespace Core.Aspects.Logging
         private LogDetail GetLogDetail(IInvocation invocation)
         {
             var logParameters = new List<LogParameter>();
-            for (int i = 0; i < invocation.Arguments.Length; i++)
-            {
+            for (var i = 0; i < invocation.Arguments.Length; i++)
                 logParameters.Add(new LogParameter
                 {
                     Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
                     Value = invocation.Arguments[i],
                     Type = invocation.Arguments[i].GetType().Name
                 });
-            }
 
             var logDetail = new LogDetail
             {

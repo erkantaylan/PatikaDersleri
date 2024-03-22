@@ -1,19 +1,13 @@
-﻿using Business.Abstract;
-using Business.Constans;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Validation;
+﻿using System.Collections.Generic;
+using Business.Abstract;
 using Core.Entities.Concrete;
-using Core.Utilities.Results;
 using DataAccess.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        IUserDal _userDal;
+        private readonly IUserDal _userDal;
 
         public UserManager(IUserDal userDal)
         {
